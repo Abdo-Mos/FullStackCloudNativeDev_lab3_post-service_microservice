@@ -5,6 +5,10 @@ import requests
 
 app = Flask(__name__)
 
+@app.route('/')
+def home():
+    return "Hello from Post Service!"
+
 @app.route('/post/<id>')
 def post(id):
     posts = {
