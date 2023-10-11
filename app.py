@@ -55,5 +55,23 @@ def create_post():
     posts.append(new_post)
     return jsonify({'Success': new_post})
 
+# -U- update post 
+@app.route('/post/<id>', methods=['PUT'])
+def update_post(id):
+    a_post = None
+
+    for post in posts:
+        if int(post['id']) == int(id):
+            a_post = post
+            break
+
+    if a_post == None:
+        return jsonify({'error:': 'post not found'})
+    
+    a_post['user_id'] = request.json['user_id']
+    a_post['post'] = request.json['post']
+
+    return jsonify({'updated': a_post})
+
 if __name__ == '__main__':
     app.run(port=5001)
