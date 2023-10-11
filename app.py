@@ -73,5 +73,20 @@ def update_post(id):
 
     return jsonify({'updated': a_post})
 
+# -D- DELETE post
+@app.route('/post/<id>', methods=['DELETE'])
+def delete_post(id):
+    a_post = None
+    for post in posts:
+        if int(post['id']) == int(id):
+            a_post = post
+            break
+
+    if a_post == None:
+        return jsonify({'error:': 'user not found'})
+    
+    posts.remove(a_post)
+    return jsonify("Deleted successfully")
+
 if __name__ == '__main__':
     app.run(port=5001)
