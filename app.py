@@ -5,6 +5,8 @@ import requests
 
 app = Flask(__name__)
 
+URL_REQ = "http://127.0.0.1:5000/user/"
+
 posts = [
     {'id': 1, 'user_id': 1, 'post': 'Hello, world!'},
     {'id': 2, 'user_id': 2, 'post': 'My first blog post'}   
@@ -19,15 +21,20 @@ def home():
 # -R- Read post by id
 @app.route('/post/<id>')
 def post(id):
-    posts = {
-        '1': {'user_id': '1', 'post': 'Hello, world!'},
-        '2': {'user_id': '2', 'post': 'My first blog post'}
-    }
-    post_info = posts.get(id, {})
+    # posts = {
+    #     '1': {'user_id': '1', 'post': 'Hello, world!'},
+    #     '2': {'user_id': '2', 'post': 'My first blog post'}
+    # }
+    # post_info = posts.get(id, {})
+    post_info = None
+    for post in posts:
+        if int(post['id']) == int(id):
+            post_info = post
+            break
     
     # Get user info from User Service
     if post_info:
-        response = requests.get(f'http://127.0.0.1:5000/user/{post_info["user_id"]}')
+        response = requests.get(f'{URL_REQ}{post_info["user_id"]}')
         if response.status_code == 200:
             post_info['user'] = response.json()
 
@@ -36,10 +43,14 @@ def post(id):
 # -C- Create post
 @app.route('/post', methods=['POST'])
 def create_post():
+    user_REQ = requests.get(f'{URL_REQ}{request.json["user_id"]}')
+    
+    # new_post['user'] = user_REQ
     new_post = {
-        'id': request.json['id'],
-        'user_id': request.json['user_id'],
-        'post': request.json['post']
+    'id': request.json['id'],
+    'user_id': request.json['user_id'],
+    'post': request.json['post'],
+    'user': user_REQ.json()
     }
     posts.append(new_post)
     return jsonify({'Success': new_post})
