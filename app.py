@@ -6,7 +6,7 @@ import requests
 app = Flask(__name__)
 
 # URL_REQ = "http://127.0.0.1:5000/user/"
-URL_REQ = "https://userservicecontainer.wonderfulocean-aa423ae1.canadacentral.azurecontainerapps.io/"
+URL_REQ = "https://userservicecontainer.wonderfulocean-aa423ae1.canadacentral.azurecontainerapps.io/user/"
 
 posts = [
     {'id': 1, 'user_id': 1, 'post': 'Hello, world!'},
@@ -39,7 +39,7 @@ def post(id):
         if response.status_code == 200:
             post_info['user'] = response.json()
 
-    return jsonify(post_info)
+    return jsonify(response.json())
 
 # -C- Create post
 @app.route('/post', methods=['POST'])
