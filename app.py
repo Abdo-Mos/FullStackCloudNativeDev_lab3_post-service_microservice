@@ -39,7 +39,7 @@ def post(id):
         if response.status_code == 200:
             post_info['user'] = response.json()
 
-    return jsonify(response.json())
+    return jsonify(post_info)
 
 # -C- Create post
 @app.route('/post', methods=['POST'])
