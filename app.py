@@ -5,7 +5,8 @@ import requests
 
 app = Flask(__name__)
 
-URL_REQ = "http://127.0.0.1:5000/user/"
+# URL_REQ = "http://127.0.0.1:5000/user/"
+URL_REQ = "https://userservicecontainer.wonderfulocean-aa423ae1.canadacentral.azurecontainerapps.io"
 
 posts = [
     {'id': 1, 'user_id': 1, 'post': 'Hello, world!'},
